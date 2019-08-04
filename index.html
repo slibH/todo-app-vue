@@ -13,7 +13,11 @@
 		<section class="todoapp" id="todoapp">
 			<header class="header">
 				<h1>todos</h1>
-				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+				<input 
+					class="new-todo" 
+					placeholder="What needs to be done?" 
+					@keyup.enter="addTodo"
+				>
 			</header>
 			<!-- 
 				当需要按条件控制渲染多个元素的时候，可以把它们都放在template这个特殊的标签中，
@@ -22,7 +26,12 @@
 			<template v-if="todos.length">
 				<!-- This section should be hidden by default and shown when there are todos -->
 				<section class="main">
-				<input id="toggle-all" class="toggle-all" type="checkbox">
+				<input 
+					id="toggle-all" 
+					class="toggle-all" 
+					type="checkbox"
+					@click="toggleAll"
+				>
 				<label for="toggle-all">Mark all as complete</label>
 				<ul class="todo-list">
 					<!-- These are here just to show the structure of the list items -->
@@ -31,8 +40,13 @@
 						1.未完成状态：不需要样式
 						2.完成状态：completed
 						3.编辑状态：editing
+
+
+						v-bind:class="{类名: 布尔值}"
+						当布尔值为true的时候，则作用这个类名
+						当布尔值为false的时候，则不作用这个类名
 					 -->
-					<li v-for="item of todos">
+					<li v-bind:class="{completed: item.completed}" v-for="item of todos">
 						<div class="view">
 							<input class="toggle" type="checkbox" v-model="item.completed">
 							<label>{{ item.title }}</label>
